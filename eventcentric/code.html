@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Eventbrite - Find Events</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e4dfff",
+                        "surface-container-highest": "#dfe1f9",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dfe1f9",
+                        "on-secondary-fixed-variant": "#812800",
+                        "surface-dim": "#d6d8f1",
+                        "tertiary-fixed-dim": "#c8c3e2",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#af3100",
+                        "on-background": "#171b2c",
+                        "surface-container-high": "#e5e7ff",
+                        "on-secondary-fixed": "#380d00",
+                        "on-primary-fixed": "#3a0a00",
+                        "background": "#fbf8ff",
+                        "on-tertiary-fixed": "#1b1930",
+                        "on-surface-variant": "#5a4139",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#852300",
+                        "primary-fixed-dim": "#ffb59f",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#fffbff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#ffdbcf",
+                        "surface-container-low": "#f3f2ff",
+                        "secondary": "#a93800",
+                        "surface": "#fbf8ff",
+                        "on-surface": "#171b2c",
+                        "inverse-surface": "#2c2f42",
+                        "primary-container": "#d1410c",
+                        "on-secondary-container": "#601c00",
+                        "outline": "#8e7068",
+                        "tertiary": "#5c5973",
+                        "inverse-primary": "#ffb59f",
+                        "tertiary-container": "#75718d",
+                        "on-primary-container": "#fffaf9",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#47445d",
+                        "primary-fixed": "#ffdbd1",
+                        "outline-variant": "#e3bfb4",
+                        "surface-container": "#ececff",
+                        "surface-bright": "#fbf8ff",
+                        "inverse-on-surface": "#f0efff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#a92f00",
+                        "secondary-fixed-dim": "#ffb59b",
+                        "secondary-container": "#ff6f35"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "gutter": "24px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "container-max": "1080px",
+                        "md": "24px",
+                        "base": "8px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 docked full-width top-0 z-50 fixed w-full">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1080px] mx-auto font-inter antialiased tracking-tight">
+<div class="flex items-center gap-8">
+<a class="text-2xl font-black text-orange-700 dark:text-orange-600" href="#">Eventbrite</a>
+<!-- Search Bar (on_left) -->
+<div class="hidden md:flex items-center bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80">
+<span class="material-symbols-outlined text-slate-400 mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full outline-none" placeholder="Search events" type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-orange-700 dark:text-orange-500 font-bold border-b-2 border-orange-700 pb-1 hover:text-orange-800 dark:hover:text-orange-400 transition-colors duration-200" href="#">Find Events</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-800 dark:hover:text-orange-400 transition-colors duration-200" href="#">Create Events</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-800 dark:hover:text-orange-400 transition-colors duration-200" href="#">Help Center</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-slate-600 dark:text-slate-400 font-medium px-4 py-2 hover:text-orange-800 transition-colors">Log In</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-bold active:opacity-80 transition-opacity">Sign Up</button>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-xl px-4 md:px-8 max-w-[1080px] mx-auto min-h-screen">
+<!-- Search Header -->
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-background mb-base">Events in New York</h1>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<p class="text-body-md text-slate-500">1,248 results found</p>
+<div class="flex items-center gap-sm">
+<span class="text-label-bold text-on-surface-variant">Sort by:</span>
+<select class="bg-white border border-outline-variant rounded-lg text-body-sm px-4 py-2 focus:ring-primary focus:border-primary outline-none">
+<option>Relevance</option>
+<option>Date</option>
+<option>Price: Low to High</option>
+</select>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Left Sidebar Filters -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="sticky top-24 space-y-lg">
+<!-- Date Filter -->
+<section>
+<h3 class="font-label-bold text-label-bold text-on-surface mb-sm">Date</h3>
+<div class="space-y-base">
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded-full text-primary focus:ring-primary" name="date" type="radio"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">All dates</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded-full text-primary focus:ring-primary" name="date" type="radio"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Today</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded-full text-primary focus:ring-primary" name="date" type="radio"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Tomorrow</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded-full text-primary focus:ring-primary" name="date" type="radio"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">This weekend</span>
+</label>
+</div>
+</section>
+<!-- Price Filter -->
+<section>
+<h3 class="font-label-bold text-label-bold text-on-surface mb-sm">Price</h3>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-base bg-surface-container-low text-on-surface-variant text-label-caps rounded-lg border border-outline-variant cursor-pointer hover:border-primary hover:text-primary">Free</span>
+<span class="px-sm py-base bg-surface-container-low text-on-surface-variant text-label-caps rounded-lg border border-outline-variant cursor-pointer hover:border-primary hover:text-primary">Paid</span>
+</div>
+</section>
+<!-- Format Filter -->
+<section>
+<h3 class="font-label-bold text-label-bold text-on-surface mb-sm">Format</h3>
+<div class="space-y-base">
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Conference</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Festival</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Workshop</span>
+</label>
+</div>
+</section>
+<!-- Category Filter -->
+<section>
+<h3 class="font-label-bold text-label-bold text-on-surface mb-sm">Category</h3>
+<div class="space-y-base">
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Music</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Business</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface-variant group-hover:text-primary">Food &amp; Drink</span>
+</label>
+</div>
+</section>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1">
+<!-- Bento / Grid Layout for Events -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Event Card 1 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-[0px_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0px_8px_25px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer">
+<div class="aspect-video relative">
+<img alt="Tech Innovators Summit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="dynamic high-energy music concert stage with bright purple and blue spotlights and silhouettes of a cheering crowd at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBOVen5RYKXIazLMztJBNGQJLQruFC_KPDDjorSNyXPS6dlMF-gIQqPpD1gONRmsvSFXfyqX0a4SiC1tQwNrHrp-qiMA90oCQMdDi0qHcqCGPCT3AQDp3oujZsTz1-rXoNxb-AgmzoLUzXMq_PoAAO3GRK081DY1DX2vg2kQkZrWbV2LdiG03yTvF4IB4BabMUtVOCsc_AqWPAAf_GPiF5VC8ftjkSuO_0ISnlW2goN7H77jgZvS1UU7h-8gwYYTucuETnI22ffCw"/>
+<button class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full text-on-surface-variant hover:text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="bg-orange-700 text-white text-label-caps px-3 py-1 rounded-lg">Best Seller</span>
+</div>
+</div>
+<div class="p-md">
+<div class="flex items-center gap-xs mb-base">
+<span class="text-primary font-label-bold text-label-bold">SAT, OCT 12 • 9:00 AM</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-background mb-xs line-clamp-2">Tech Innovators Summit 2024: The Future of AI</h2>
+<p class="text-body-sm text-slate-500 mb-md line-clamp-1">Javits Center, Manhattan, NY</p>
+<div class="flex items-center justify-between">
+<span class="text-label-bold text-on-surface font-bold">From $299.00</span>
+<div class="flex items-center gap-xs text-slate-400">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-[0px_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0px_8px_25px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer">
+<div class="aspect-video relative">
+<img alt="Urban Food Festival" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="close-up of artisan gourmet tacos with fresh cilantro and lime on a rustic wooden board with warm golden lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC30x1QSesPtCQIhN0C8WXicOoXeNHhaOuIr5nVbagrSihBo9Sv9AsqQ3xcyv2w-BFDScZDcG4-FMJ29D9mXbgjk_wOgqSJUHdCVWe1mj0nlMP3h7FzKnst3YSdFBfYpNIu-Fm3gfPZUNjTf3kyvg-1wAYKXHPO1HU5LjNxcdAViR0vc30mWtoMFecKHnJ0FrJB_dMo212_7YDl_tyCrCuHGsX_oxjJ1D_I-IBCF_yORk0cVWQ1YrSnqe2S0fduOgGEvvRUlRSJQIE"/>
+<button class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full text-on-surface-variant hover:text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<div class="flex items-center gap-xs mb-base">
+<span class="text-primary font-label-bold text-label-bold">SUN, OCT 13 • 12:00 PM</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-background mb-xs line-clamp-2">Urban Street Food &amp; Craft Beer Festival</h2>
+<p class="text-body-sm text-slate-500 mb-md line-clamp-1">Central Park South, NY</p>
+<div class="flex items-center justify-between">
+<span class="text-label-bold text-on-surface font-bold">Free</span>
+<div class="flex items-center gap-xs text-slate-400">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-[0px_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0px_8px_25px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer">
+<div class="aspect-video relative">
+<img alt="Wellness Workshop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="large outdoor yoga class in a lush green park at sunrise with many people in peaceful poses and soft morning mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBChDyZufgJFWlfi4sovAhlCSVhZDyMjpGdxEc2GpO0M_H0-NvE6tvPktC8QIH6estTdwOcbUKcgdnbY1ByrjVjdj6SHLHxhuE0fQrtFggBkxQWLrdMgT5zTIU8snL4xHHd5tIXx284YiFIuEg3Bep8ykvqJXGT-lo6uL6e0qbXREwTVDGDKjWD_z9zduRrmu4Wd9eTL_k-Uvir931BAJigiQjVT5SDU__8azkI3qgG1ce9qghVUArnMaUA8eTz1scgCjL40zeYGWg"/>
+<button class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full text-on-surface-variant hover:text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<div class="flex items-center gap-xs mb-base">
+<span class="text-primary font-label-bold text-label-bold">WED, OCT 16 • 6:30 PM</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-background mb-xs line-clamp-2">Mindful Mornings: Yoga &amp; Meditation Workshop</h2>
+<p class="text-body-sm text-slate-500 mb-md line-clamp-1">Brooklyn Bridge Park, NY</p>
+<div class="flex items-center justify-between">
+<span class="text-label-bold text-on-surface font-bold">From $25.00</span>
+<div class="flex items-center gap-xs text-slate-400">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Event Card 4 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-[0px_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0px_8px_25px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer">
+<div class="aspect-video relative">
+<img alt="After Hours Party" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="vibrant neon-lit electronic music dance floor with abstract light projections and energetic crowd in motion blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFcGeoTepcKjMs1BPB5ucK4-WKj6xAhgEY0F-49hkIGlsNsrBXYhfkc_abqiYm_z1HdPRaUSL5CIuOMbCRZf3LufJGUPYRILAjK5shD5m2gmqwHcVwBTjIJQmg8-AF9v1EQSb0Xq0oexCd8ikcUGTR6JsbtxIE3dbynf1LgYHdZNB3IWC5VpsAhM949ZsZmWsHck9t_BJ1bl1Xh7O0U8xk5qzqu2qFhcag9ibm7HsbT7l5L_Pktb7P9Dro5A4IJU66QZqsUFJhlJY"/>
+<button class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full text-on-surface-variant hover:text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<div class="flex items-center gap-xs mb-base">
+<span class="text-primary font-label-bold text-label-bold">FRI, OCT 18 • 10:00 PM</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-background mb-xs line-clamp-2">Neon Nights: Electronic Underground Party</h2>
+<p class="text-body-sm text-slate-500 mb-md line-clamp-1">Output Club, Brooklyn, NY</p>
+<div class="flex items-center justify-between">
+<span class="text-label-bold text-on-surface font-bold">From $45.00</span>
+<div class="flex items-center gap-xs text-slate-400">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-xl flex justify-center items-center gap-base">
+<button class="p-2 rounded-lg border border-outline-variant hover:border-primary text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary-container text-white font-label-bold">1</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant hover:border-primary text-on-surface-variant hover:text-primary font-label-bold">2</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant hover:border-primary text-on-surface-variant hover:text-primary font-label-bold">3</button>
+<span class="text-slate-400">...</span>
+<button class="w-10 h-10 rounded-lg border border-outline-variant hover:border-primary text-on-surface-variant hover:text-primary font-label-bold">12</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:border-primary text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 full-width bottom-0">
+<div class="max-w-[1080px] mx-auto py-12 px-4 grid grid-cols-2 md:grid-cols-4 gap-8 font-inter text-sm">
+<div class="col-span-2 md:col-span-1">
+<div class="text-lg font-bold text-slate-900 dark:text-white mb-4">Eventbrite</div>
+<p class="text-slate-500 dark:text-slate-400 max-w-xs">Organize, find, and attend the world's most vibrant experiences.</p>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-slate-900 dark:text-white font-semibold mb-2">Plan Events</h4>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Create Events</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Sell Tickets</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Online Events</a>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-slate-900 dark:text-white font-semibold mb-2">About</h4>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">About Us</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Blog</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Careers</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Press</a>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-slate-900 dark:text-white font-semibold mb-2">Support</h4>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Help Center</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Terms</a>
+<a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500 cursor-pointer" href="#">Privacy</a>
+</div>
+</div>
+<div class="max-w-[1080px] mx-auto pb-8 px-4 flex flex-col md:flex-row justify-between items-center border-t border-slate-200 dark:border-slate-800 pt-8 gap-4">
+<p class="text-slate-500 dark:text-slate-400 text-sm">© 2024 Eventbrite</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-700" data-icon="public">public</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-700" data-icon="language">language</span>
+</div>
+</div>
+</footer>
+</body></html>

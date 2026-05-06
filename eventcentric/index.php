@@ -1,0 +1,360 @@
+<?php
+$pageTitle = 'Home';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/helpers.php';
+startSession();
+$currentUser = getCurrentUser();
+
+$db = getDB();
+$upcoming = $db->query("SELECT e.*, MIN(t.price) as min_price FROM events e LEFT JOIN tickets t ON t.event_id = e.id GROUP BY e.id ORDER BY e.start_datetime ASC LIMIT 4")->fetchAll();
+?>
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Eventbrite - Discover Great Events or Create Your Own</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#e4dfff",
+                    "surface-container-highest": "#dfe1f9",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#dfe1f9",
+                    "on-secondary-fixed-variant": "#812800",
+                    "surface-dim": "#d6d8f1",
+                    "tertiary-fixed-dim": "#c8c3e2",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#af3100",
+                    "on-background": "#171b2c",
+                    "surface-container-high": "#e5e7ff",
+                    "on-secondary-fixed": "#380d00",
+                    "on-primary-fixed": "#3a0a00",
+                    "background": "#fbf8ff",
+                    "on-tertiary-fixed": "#1b1930",
+                    "on-surface-variant": "#5a4139",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#852300",
+                    "primary-fixed-dim": "#ffb59f",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#fffbff",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#ffdbcf",
+                    "surface-container-low": "#f3f2ff",
+                    "secondary": "#a93800",
+                    "surface": "#fbf8ff",
+                    "on-surface": "#171b2c",
+                    "inverse-surface": "#2c2f42",
+                    "primary-container": "#d1410c",
+                    "on-secondary-container": "#601c00",
+                    "outline": "#8e7068",
+                    "tertiary": "#5c5973",
+                    "inverse-primary": "#ffb59f",
+                    "tertiary-container": "#75718d",
+                    "on-primary-container": "#fffaf9",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#47445d",
+                    "primary-fixed": "#ffdbd1",
+                    "outline-variant": "#e3bfb4",
+                    "surface-container": "#ececff",
+                    "surface-bright": "#fbf8ff",
+                    "inverse-on-surface": "#f0efff",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary": "#a92f00",
+                    "secondary-fixed-dim": "#ffb59b",
+                    "secondary-container": "#ff6f35"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "gutter": "24px",
+                    "lg": "48px",
+                    "xs": "4px",
+                    "container-max": "1080px",
+                    "md": "24px",
+                    "base": "8px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-white font-body-md text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-900 docked full-width top-0 z-50 border-b border-slate-200 dark:border-slate-800 transition-opacity">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1080px] mx-auto font-inter antialiased tracking-tight">
+<div class="flex items-center gap-8">
+<a class="text-2xl font-black text-orange-700 dark:text-orange-600" href="#">Eventbrite</a>
+<div class="hidden lg:flex items-center bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2 w-80">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder-slate-500" placeholder="Search events" type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-orange-700 dark:text-orange-500 font-bold border-b-2 border-orange-700 pb-1 hover:text-orange-800 dark:hover:text-orange-400 transition-colors duration-200" href="<?= SITE_URL ?>/events.php">Find Events</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-800 dark:hover:text-orange-400 transition-colors duration-200" href="<?= SITE_URL ?>/create_event.php">Create Events</a>
+<?php if ($currentUser): ?>
+    <a href="<?= SITE_URL ?>/dashboard.php" class="text-slate-600 font-medium px-4 py-2 hover:text-orange-800 transition-colors">Hi, <?= sanitize(explode(' ', $currentUser['name'])[0]) ?></a>
+    <a href="<?= SITE_URL ?>/logout.php" class="bg-slate-100 text-slate-700 px-6 py-2 rounded-lg font-semibold hover:bg-slate-200 transition-colors">Log Out</a>
+<?php else: ?>
+    <a href="<?= SITE_URL ?>/login.php" class="text-slate-600 dark:text-slate-400 font-semibold hover:text-orange-800 transition-colors">Log In</a>
+    <a href="<?= SITE_URL ?>/register.php" class="bg-[#D1410C] text-white px-6 py-2 rounded-lg font-label-bold active:opacity-80 transition-opacity">Sign Up</a>
+<?php endif; ?>
+</nav>
+<button class="md:hidden text-slate-600">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden bg-slate-950">
+<div class="absolute inset-0 opacity-60">
+<img alt="Concert stage with vibrant lighting and crowd silhouettes" class="w-full h-full object-cover" data-alt="cinematic wide shot of a crowded music festival stage with vibrant pink and blue stage lights and laser beams during sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXbdxooy-bwGkC4EiTUwhitPwIr1L-FlQZHRjsNWtkCpnAMuMFzHFaU0yTZkLhoTHZ3C6MCgp3FELu5QXullAq0LYmH0153daYnb2KBEfuh95tPFPVoUOzTkR9gTU09AX9w1qkeIptsS5tRisvIOs7Kqyzf6LBLjmUmuFFRbMZpfqiZ8BWGBLs0ije9YNIr5ukQO9POGe_8YXJTa3XiMDgaFoRumu7ujHqUq1KKDq3g4baxfje0QhS1ag4D5SHrgI0Pq1OKXdWfKw"/>
+</div>
+<div class="relative max-w-[1080px] mx-auto px-4 py-24 md:py-32 flex flex-col items-center text-center">
+<h1 class="text-white font-headline-xl mb-6">Find your next experience</h1>
+<!-- Main Search Bar -->
+<form action="<?= SITE_URL ?>/events.php" method="GET" class="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-2 flex flex-col md:flex-row items-center gap-2">
+<div class="flex items-center w-full px-4 py-3 border-b md:border-b-0 md:border-r border-slate-200">
+<span class="material-symbols-outlined text-slate-400 mr-3" data-icon="search">search</span>
+<input class="w-full border-none focus:ring-0 text-slate-900 font-body-md placeholder-slate-400" name="q" placeholder="Search events, organizers, or themes" type="text"/>
+</div>
+<div class="flex items-center w-full px-4 py-3">
+<span class="material-symbols-outlined text-slate-400 mr-3" data-icon="location_on">location_on</span>
+<input class="w-full border-none focus:ring-0 text-slate-900 font-body-md placeholder-slate-400" name="location" placeholder="London, UK" type="text"/>
+</div>
+<button class="w-full md:w-auto bg-[#D1410C] text-white px-8 py-3 rounded-lg font-headline-md text-base hover:bg-primary transition-colors">
+                        Search
+                    </button>
+</form>
+</div>
+</section>
+<!-- Trending Categories -->
+<section class="py-12 bg-white">
+<div class="max-w-[1080px] mx-auto px-4">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline-md text-on-surface">Trending categories</h2>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="music_note">music_note</span>
+</div>
+<span class="font-label-bold text-slate-700">Music</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="nightlife">nightlife</span>
+</div>
+<span class="font-label-bold text-slate-700">Nightlife</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="restaurant">restaurant</span>
+</div>
+<span class="font-label-bold text-slate-700">Food &amp; Drink</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="theater_comedy">theater_comedy</span>
+</div>
+<span class="font-label-bold text-slate-700">Performing Arts</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="fitness_center">fitness_center</span>
+</div>
+<span class="font-label-bold text-slate-700">Health</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="business_center">business_center</span>
+</div>
+<span class="font-label-bold text-slate-700">Business</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-3 group">
+<div class="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-orange-700 transition-colors">
+<span class="material-symbols-outlined text-3xl text-orange-700" data-icon="palette">palette</span>
+</div>
+<span class="font-label-bold text-slate-700">Hobbies</span>
+</button>
+</form>
+</div>
+</section>
+<!-- Featured / Carousel Section -->
+<section class="py-12 bg-slate-50">
+<div class="max-w-[1080px] mx-auto px-4">
+<h2 class="font-headline-md text-on-surface mb-8">Discover events</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="relative rounded-2xl overflow-hidden group cursor-pointer aspect-video md:aspect-auto">
+<img alt="Large tech conference with audience" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="dynamic professional business conference with people sitting in a modern auditorium with neon blue accent lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI6Qgmo5rpkZxg1duMK1VoAAuS8LGOr7uvICUe6QqpF676XQWRMbDwrDEqTgI9bFi7N7whcODiOWN1mAd5miqNXfrCK0v5P5LAQMpnoIubg91WIOnJ9J0yCWPMMsaDzUTeEGJhft5lS0ZB6yN3-AeBp9KI0bE8yeHRx-YK4LUg1hYCq_UJHUt8tLJkaI4JvPtliqAhfTUrJFX63ZWe9EV05yOUE99YeJPE4hDXTUDnEQvEj8ZR9-RZ56DXc0swB0ceXn-OwzDjKF4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
+<span class="bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold w-fit mb-3">FEATURED</span>
+<h3 class="text-white font-headline-lg mb-2">Tech Innovation Summit 2024</h3>
+<p class="text-slate-200 font-body-md">Connect with the future of AI and robotics.</p>
+</div>
+</div>
+<div class="grid grid-rows-2 gap-6">
+<div class="relative rounded-2xl overflow-hidden group cursor-pointer">
+<img alt="Jazz band playing in a dim lounge" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" data-alt="atmospheric jazz club with a musician playing saxophone under a single golden spotlight in a smoky room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChjLWXOQ66XWBMNe-RumLp4v5mqMkg2ddoyr_sEXDxIrZcztV6gI8Fxo-1njOKauDv7InUrimmSP-6YbN1sBSXFpoMl2vgjGHU0B3GvXSWLPgy0g_JcLL5Rya-9OeeG5-peuZ_vRHuyK4XnijctLgu3K5kd2oHXb8qEClOaQ88vmRxTDLNstuwUPyQYZVo1B63pC5Khd6gZ1DaT8SYY-pxPxLl3d8MB2c1aOSlv-_6RuFiLM5g8WN4eIqMufPuqCM3AJfO9Hs7PhE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
+<h3 class="text-white font-headline-md">Midnight Jazz Series</h3>
+</div>
+</div>
+<div class="relative rounded-2xl overflow-hidden group cursor-pointer">
+<img alt="Platter of street food" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" data-alt="vibrant street food festival with variety of colorful dishes on wooden tables under outdoor string lights at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyKz8KJTJ9iecgBgYkLkdetWQN9HQuTqeDGhK9TCU1KZF6AFvtas-DUq5GngZDiLkliLUYTMVb-9UbgPAe-cLbkykzl_E5uJcIrSryvqZLeW9iIUWIAV9kkIDll_D9aqqg2Sqg4u1S18w3ssG7dmG5-4LAElp6d_xCuoLslPavtDa2Joi8hFYVSKZwOUWHFwe1baMpJf3paIGA_R8B24vLHXx9e1wiLsf42ZuuZpKd8Mg4eTYLmpZkQIpBzOLYtk6SRVq9X6KZ4lc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
+<h3 class="text-white font-headline-md">Global Street Food Expo</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Popular Events Grid -->
+<section class="py-16">
+<div class="max-w-[1080px] mx-auto px-4">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+<div>
+<h2 class="font-headline-lg text-on-surface">Popular in London</h2>
+<p class="text-slate-500 font-body-md mt-2">Curated events for your city</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-[#F8F8FA] text-[#39364F] px-4 py-2 rounded-full font-label-bold text-sm border border-slate-200">All</button>
+<button class="bg-white text-[#39364F] px-4 py-2 rounded-full font-label-bold text-sm border border-slate-200 hover:bg-slate-50 transition-colors">Today</button>
+<button class="bg-white text-[#39364F] px-4 py-2 rounded-full font-label-bold text-sm border border-slate-200 hover:bg-slate-50 transition-colors">Weekend</button>
+<button class="bg-white text-[#39364F] px-4 py-2 rounded-full font-label-bold text-sm border border-slate-200 hover:bg-slate-50 transition-colors">Free</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<?php foreach ($upcoming as $event): ?>
+<a href="<?= SITE_URL ?>/event.php?id=<?= $event['id'] ?>" class="flex flex-col bg-white rounded-xl shadow-[0px_4px_15px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_25px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer border border-[#DBDAE3]">
+<div class="relative overflow-hidden rounded-t-xl aspect-[4/3]">
+<img src="<?= getEventImageUrl($event['image_path']) ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+</div>
+<div class="p-sm flex flex-col h-full">
+<p class="text-orange-700 font-label-bold text-xs mb-1"><?= formatEventDate($event['start_datetime']) ?></p>
+<h3 class="font-headline-md text-base text-on-surface line-clamp-2 mb-2"><?= sanitize($event['title']) ?></h3>
+<p class="text-[#6F7287] font-body-sm mb-4"><?= sanitize($event['location'] ?: 'Online') ?></p>
+<div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+<span class="text-[#39364F] font-label-bold"><?= formatPrice($event['min_price']) ?></span>
+</div>
+</div>
+</a>
+<?php endforeach; ?>
+</div>
+<div class="mt-12 text-center">
+<button class="border border-[#39364F] text-[#39364F] px-8 py-3 rounded-lg font-headline-md text-base hover:bg-slate-50 transition-colors">
+                        See more events
+                    </button>
+</div>
+</section>
+<!-- Organizing Section -->
+<section class="py-20 bg-primary-container">
+<div class="max-w-[1080px] mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+<div class="w-full md:w-1/2">
+<img alt="Event organizers coordinating" class="rounded-2xl shadow-2xl object-cover w-full h-[400px]" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80"/>
+</div>
+<div class="w-full md:w-1/2 text-white">
+<h2 class="font-headline-xl text-white mb-6">Create your own event</h2>
+<p class="font-body-lg text-white/90 mb-8">Whatever your passion, you can build a community around it on Eventbrite. Set up your event in minutes.</p>
+<button class="bg-white text-orange-700 px-10 py-4 rounded-lg font-headline-md hover:bg-slate-100 transition-colors">
+                        Get Started
+                    </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 full-width bottom-0 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-[1080px] mx-auto py-12 px-4 grid grid-cols-2 md:grid-cols-4 gap-8 font-inter text-sm">
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold mb-4">Use Eventbrite</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Create Events</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Pricing</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Event Marketing Platform</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Mobile Ticket App</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold mb-4">Plan Events</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Online Events</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Virtual Events</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Event Management</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Conference Management</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold mb-4">Find Events</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">London Events</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">NYC Events</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Virtual Classes</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Online Yoga</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold mb-4">Connect With Us</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">About</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Blog</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Careers</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:underline hover:text-orange-700 dark:hover:text-orange-500" href="#">Press</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1080px] mx-auto px-4 py-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="text-slate-500 dark:text-slate-400 text-sm">Â© 2024 Eventbrite</span>
+<div class="flex gap-6">
+<a class="text-slate-500 dark:text-slate-400 text-sm hover:text-orange-700" href="#">Terms</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm hover:text-orange-700" href="#">Privacy</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm hover:text-orange-700" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+</body></html>

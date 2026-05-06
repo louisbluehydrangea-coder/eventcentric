@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "tertiary-fixed": "#e4dfff",
+                  "surface-container-highest": "#dfe1f9",
+                  "error-container": "#ffdad6",
+                  "surface-variant": "#dfe1f9",
+                  "on-secondary-fixed-variant": "#812800",
+                  "surface-dim": "#d6d8f1",
+                  "tertiary-fixed-dim": "#c8c3e2",
+                  "on-error": "#ffffff",
+                  "surface-tint": "#af3100",
+                  "on-background": "#171b2c",
+                  "surface-container-high": "#e5e7ff",
+                  "on-secondary-fixed": "#380d00",
+                  "on-primary-fixed": "#3a0a00",
+                  "background": "#fbf8ff",
+                  "on-tertiary-fixed": "#1b1930",
+                  "on-surface-variant": "#5a4139",
+                  "surface-container-lowest": "#ffffff",
+                  "on-primary-fixed-variant": "#852300",
+                  "primary-fixed-dim": "#ffb59f",
+                  "error": "#ba1a1a",
+                  "on-tertiary-container": "#fffbff",
+                  "on-secondary": "#ffffff",
+                  "secondary-fixed": "#ffdbcf",
+                  "surface-container-low": "#f3f2ff",
+                  "secondary": "#a93800",
+                  "surface": "#fbf8ff",
+                  "on-surface": "#171b2c",
+                  "inverse-surface": "#2c2f42",
+                  "primary-container": "#d1410c",
+                  "on-secondary-container": "#601c00",
+                  "outline": "#8e7068",
+                  "tertiary": "#5c5973",
+                  "inverse-primary": "#ffb59f",
+                  "tertiary-container": "#75718d",
+                  "on-primary-container": "#fffaf9",
+                  "on-error-container": "#93000a",
+                  "on-tertiary-fixed-variant": "#47445d",
+                  "primary-fixed": "#ffdbd1",
+                  "outline-variant": "#e3bfb4",
+                  "surface-container": "#ececff",
+                  "surface-bright": "#fbf8ff",
+                  "inverse-on-surface": "#f0efff",
+                  "on-tertiary": "#ffffff",
+                  "on-primary": "#ffffff",
+                  "primary": "#a92f00",
+                  "secondary-fixed-dim": "#ffb59b",
+                  "secondary-container": "#ff6f35"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "sm": "12px",
+                  "gutter": "24px",
+                  "lg": "48px",
+                  "xs": "4px",
+                  "container-max": "1080px",
+                  "md": "24px",
+                  "base": "8px",
+                  "xl": "64px"
+          },
+          "fontFamily": {
+                  "body-lg": ["Inter"],
+                  "headline-xl": ["Inter"],
+                  "headline-lg": ["Inter"],
+                  "headline-md": ["Inter"],
+                  "label-bold": ["Inter"],
+                  "body-md": ["Inter"],
+                  "body-sm": ["Inter"],
+                  "label-caps": ["Inter"]
+          },
+          "fontSize": {
+                  "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                  "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                  "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                  "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                  "label-caps": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-shadow {
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+    }
+    .hero-blur {
+      backdrop-filter: blur(40px);
+      background: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body class="bg-background font-body-md text-on-background antialiased">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 docked full-width top-0 z-50 fixed w-full">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1080px] mx-auto font-inter antialiased tracking-tight">
+<div class="flex items-center gap-6 flex-1">
+<span class="text-2xl font-black text-orange-700 dark:text-orange-600">Eventbrite</span>
+<div class="hidden md:flex relative flex-1 max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-body-sm focus:ring-2 focus:ring-primary" placeholder="Search events" type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6 mx-8">
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-800 transition-colors duration-200" href="#">Find Events</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-800 transition-colors duration-200" href="#">Create Events</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-800 transition-colors duration-200" href="#">Help Center</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-slate-600 font-label-bold px-4 py-2 hover:bg-slate-50 rounded-lg">Log In</button>
+<button class="bg-primary-container text-on-primary-container font-label-bold px-6 py-2 rounded-lg active:opacity-80 transition-opacity">Sign Up</button>
+</div>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="relative w-full h-[300px] md:h-[480px] overflow-hidden bg-slate-900">
+<div class="absolute inset-0 w-full h-full">
+<img alt="Event Header" class="w-full h-full object-cover opacity-60 blur-sm scale-105" data-alt="Vibrant outdoor music festival at night with colorful stage lights and a large cheering crowd in silhouette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEiSz-gqrEV9ujbNkHUZIvX3JMQf_hFwvpBb8WpvRlEGG58EP4oqbVqhkgqXFlKrtJssIBAoLhmSKE-4m4WyxzG1IgP9NP7_a0e41QRt6PoL_QW3o97edvOFG7kteQtRSxmClKVJ3VJtqLfN3wNmL8w4l9KePJ1piweo-z92VdkUwYemxgJ36U8pXQtN3ACNzdL6FQfc-RWwxLCHmLgNFOUQXgfYYGYKAjXh6TwEhD-9YX1s68lcUtC_sus6d-0vZYhE9U1jYhYO8"/>
+</div>
+<div class="relative max-w-[1080px] mx-auto h-full flex items-center justify-center px-4 md:px-0">
+<div class="w-full max-w-[940px] aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden custom-shadow bg-white">
+<img alt="Event Main" class="w-full h-full object-cover" data-alt="Professional indoor conference with modern lighting and people networking in a sleek corporate environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcKlA-ls0ExUDQ8PpELx99RYGa7oM67ovSZ-u4yUrJYCkL326LMSFTJmFIeUGCEJ4yI6oxljMGLD7-sscHg5gAHjV9XfeyFF32S92sRWjBBQwX9AQDX7V8mWTx4wyj5LVBDCUmT_11iHfUCXn7vxuPIuLXYfwTgBcpDBBVLzoMYPSbyaZFSw1gu3p1UhRb-xLn1klnwquv0URKpO9rTEGKlPbkXKe07EoNNxrYWeOTXaF4GGk5ODAB5HzKlcB7iniDaxREh0PLCsA"/>
+</div>
+</div>
+</section>
+<!-- Main Content Layout -->
+<div class="max-w-[1080px] mx-auto px-4 md:px-8 py-lg grid grid-cols-1 md:grid-cols-12 gap-xl">
+<!-- Content Column -->
+<div class="md:col-span-8 space-y-lg">
+<div class="space-y-sm">
+<p class="text-primary font-label-bold">Nov 24</p>
+<h1 class="font-headline-xl text-on-background leading-tight">Global Innovation Summit 2024: Shaping the Future of Tech</h1>
+<div class="flex items-center gap-2 py-4 border-y border-slate-100">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Organizer" data-alt="Close-up portrait of a professional man in a suit with a warm and confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyLWEK3DZDoKIsSojyrw9tOZGIGB9EHmv5CEtjYqr4ouTxbvyALsIsfdd9hM3CvzAU8cN7oL9FtLEVqx6CXt2noKeNOM4nFodYcB640c5yLHvV_H9stVsVN3JVGfd9pHiSQDBhYsWK7El3T67lPKX28FlxSov2ZM1EiELovnm9RJeLmmr_s27Lq0P9z3xdhcUkP45C1qBDC2u7EN_5CitCF9sIcvPSVSLWQdEqd8qV1wN0buJzQuCjwW6skwg8mtv8qj9OvMaRDno"/>
+</div>
+<div>
+<p class="text-body-sm text-slate-500">By <span class="font-label-bold text-on-background hover:underline cursor-pointer">TechForward Global</span></p>
+<p class="text-label-caps text-slate-400">5.2k followers</p>
+</div>
+</div>
+</div>
+<!-- Date and Location Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="flex gap-md items-start">
+<div class="p-3 bg-surface-container-low rounded-lg text-primary">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div>
+<h3 class="font-label-bold">Date and time</h3>
+<p class="text-body-sm text-slate-600">Sunday, November 24 · 9am - 6pm EST</p>
+</div>
+</div>
+<div class="flex gap-md items-start">
+<div class="p-3 bg-surface-container-low rounded-lg text-primary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<h3 class="font-label-bold">Location</h3>
+<p class="text-body-sm text-slate-600">Metropolitan Pavilion</p>
+<p class="text-body-sm text-slate-400">125 West 18th Street, New York, NY 10011</p>
+<button class="text-primary font-label-bold text-sm mt-1 hover:underline">Show map</button>
+</div>
+</div>
+</div>
+<!-- About Section -->
+<article class="space-y-md">
+<h2 class="font-headline-md">About this event</h2>
+<div class="space-y-md text-body-md text-slate-700">
+<p>Join us for the most anticipated technology summit of the year. The Global Innovation Summit brings together the brightest minds in AI, sustainable energy, and digital transformation for a day of immersive learning and networking.</p>
+<p>Experience keynote speeches from industry pioneers, participate in hands-on technical workshops, and connect with over 1,500 fellow innovators from across the globe. Whether you're a seasoned developer, a startup founder, or a tech enthusiast, this summit offers unique insights into the tools and trends defining our collective future.</p>
+<h4 class="font-label-bold text-on-background">What to expect:</h4>
+<ul class="list-disc pl-5 space-y-xs">
+<li>15+ Breakout sessions with world-class speakers</li>
+<li>Exclusive networking lounge for premium attendees</li>
+<li>Live demonstrations of emerging technologies</li>
+<li>Complimentary organic catering and refreshments</li>
+</ul>
+</div>
+</article>
+<!-- Tags -->
+<div class="pt-md">
+<h3 class="font-label-bold mb-sm">Tags</h3>
+<div class="flex flex-wrap gap-xs">
+<span class="px-3 py-1 bg-slate-50 text-slate-600 text-label-caps rounded-full hover:bg-slate-100 cursor-pointer transition-colors border border-slate-200">Technology</span>
+<span class="px-3 py-1 bg-slate-50 text-slate-600 text-label-caps rounded-full hover:bg-slate-100 cursor-pointer transition-colors border border-slate-200">Networking</span>
+<span class="px-3 py-1 bg-slate-50 text-slate-600 text-label-caps rounded-full hover:bg-slate-100 cursor-pointer transition-colors border border-slate-200">New York Events</span>
+<span class="px-3 py-1 bg-slate-50 text-slate-600 text-label-caps rounded-full hover:bg-slate-100 cursor-pointer transition-colors border border-slate-200">Innovation</span>
+<span class="px-3 py-1 bg-slate-50 text-slate-600 text-label-caps rounded-full hover:bg-slate-100 cursor-pointer transition-colors border border-slate-200">Artificial Intelligence</span>
+</div>
+</div>
+</div>
+<!-- Sidebar -->
+<aside class="md:col-span-4">
+<div class="sticky top-24 space-y-md">
+<div class="p-6 bg-white border border-slate-200 rounded-xl custom-shadow">
+<div class="flex justify-between items-center mb-6">
+<span class="font-label-bold text-lg">Tickets</span>
+<span class="text-slate-500 text-sm">Starts at <span class="text-on-background font-bold">$45.00</span></span>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-label-bold py-3 rounded-lg text-lg hover:brightness-110 transition-all mb-4">
+              Get tickets
+            </button>
+<div class="flex items-center gap-2 justify-center text-slate-500 text-xs">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span>Secure checkout provided by Eventbrite</span>
+</div>
+</div>
+<div class="p-6 bg-white border border-slate-200 rounded-xl">
+<h3 class="font-label-bold mb-4">About the organizer</h3>
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<p class="font-label-bold">TechForward Global</p>
+<p class="text-xs text-slate-500">Organizing since 2015</p>
+</div>
+</div>
+<button class="w-full border border-slate-300 text-slate-700 font-label-bold py-2 rounded-lg hover:bg-slate-50 transition-colors">
+              Contact Organizer
+            </button>
+</div>
+</div>
+</aside>
+</div>
+<!-- More events section -->
+<section class="bg-slate-50 border-t border-slate-200 py-xl mt-lg">
+<div class="max-w-[1080px] mx-auto px-4 md:px-8">
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-headline-md">More events like this</h2>
+<a class="text-primary font-label-bold hover:underline" href="#">See all</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-md">
+<!-- Card 1 -->
+<div class="bg-white rounded-xl overflow-hidden border border-slate-200 custom-shadow group cursor-pointer transition-transform hover:-translate-y-1">
+<div class="h-40 overflow-hidden">
+<img alt="Related Event" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="People sitting in a dark theater watching a presentation on a large glowing screen with colorful graphics" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqiWnrxI2S-z8FWQsW9Frtk11nKIioYw6yZLRbALBWLO0p0jbajRT0jvJlRZjWCuDjn8eK4ZMUCt2GYS2c73Id-XPyZLJm-QkGQebdfmvG1_ecMRGJ1IC8UwQhk4D3tKb6a0fQrNLvhGXVm9zGoDl-hGEkPk23LSHBuwj-iQDQSoNmoT0bupRDar0A05LM6nv51cjEwUl1wLQ3uUX_aB27bHAY8j_7ac3v9t_KjlhSm6k80QMX99SiHKsNb2pRiFedsA-aguc-JB0"/>
+</div>
+<div class="p-4 space-y-2">
+<p class="text-primary text-label-caps uppercase">Dec 05 · 6:00 PM</p>
+<h3 class="font-label-bold text-on-background line-clamp-2">SaaS Founders Night: Scaling to Series A</h3>
+<p class="text-body-sm text-slate-500">Greenhouse Labs · New York, NY</p>
+<p class="font-label-bold text-sm">$25.00</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-xl overflow-hidden border border-slate-200 custom-shadow group cursor-pointer transition-transform hover:-translate-y-1">
+<div class="h-40 overflow-hidden">
+<img alt="Related Event" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Beautifully decorated banquet hall with golden lighting and elegant table settings for a formal corporate gala" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWr8d43CVB-XbzFwFUFKPiXsSCTIh-aX3G7A-3quoqWu_M3JmXeTOA_ZUAW3j60JLcW8CLdfTcdxfag4aHrUMHgq3CosUkGE4Wz4J-oo8ObwWYkr4DGd5JQ3lv8dn_KwPQKv5D_SkIjlBIJRKkRJc-iKhJ8rJj-FiavCc22cM8glXuyezman6VEf2-il3NUxf6MQ-VoRGOFeMYmpF2uVLQ5ErbrEkwgAeA6rfT3QuBXS1TETO9PyYSaB1ihp46gXQcaeRxW-vvRck"/>
+</div>
+<div class="p-4 space-y-2">
+<p class="text-primary text-label-caps uppercase">Jan 12 · 10:00 AM</p>
+<h3 class="font-label-bold text-on-background line-clamp-2">Design Ethics &amp; AI Workshop</h3>
+<p class="text-body-sm text-slate-500">Pratt Institute · Brooklyn, NY</p>
+<p class="font-label-bold text-sm">Free</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-xl overflow-hidden border border-slate-200 custom-shadow group cursor-pointer transition-transform hover:-translate-y-1">
+<div class="h-40 overflow-hidden">
+<img alt="Related Event" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Diverse group of young professionals collaborating around a large wooden table in a bright modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKjrjZx2PNOjlBGItHJBO0Tx2DGnyJz8arNvqtiI7X32U0Ww04M6lSc0QvqmsABtQhI3Gwvn1xChLLEAR7kjQbJ7F4BLi2YXUiahmKRBvkTL9TkFJ9lqZnDEwz5Lsn4Cqn0s6rceZPg5sAuSmMQiHURR73rRVOVel3HWXe1kGFQjY4lOo92dwJ1znlQbSkvEbAcLbKZ7Bt-e69GWepJSpmHR5lB8RSbx0b9ASAQvPmWerPv-CM2gbb-MbyqNaUoCozRnzrGK_beS0"/>
+</div>
+<div class="p-4 space-y-2">
+<p class="text-primary text-label-caps uppercase">Feb 20 · 9:00 AM</p>
+<h3 class="font-label-bold text-on-background line-clamp-2">FinTech World Expo 2025</h3>
+<p class="text-body-sm text-slate-500">Javits Center · New York, NY</p>
+<p class="font-label-bold text-sm">$150.00</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 font-inter text-sm">
+<div class="max-w-[1080px] mx-auto py-12 px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="space-y-4">
+<span class="text-lg font-bold text-slate-900 dark:text-white">Eventbrite</span>
+<p class="text-slate-500 dark:text-slate-400 max-w-xs">Connecting the world through live experiences.</p>
+</div>
+<div class="space-y-4">
+<h4 class="font-semibold text-slate-900 dark:text-white">Find Events</h4>
+<ul class="space-y-2 text-slate-500 dark:text-slate-400">
+<li><a class="hover:underline hover:text-orange-700" href="#">Virtual Events</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Events in NYC</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Workshops</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Conferences</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-semibold text-slate-900 dark:text-white">Plan Events</h4>
+<ul class="space-y-2 text-slate-500 dark:text-slate-400">
+<li><a class="hover:underline hover:text-orange-700" href="#">Sell Tickets Online</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Event Marketing</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Pricing</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Integrations</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-semibold text-slate-900 dark:text-white">Company</h4>
+<ul class="space-y-2 text-slate-500 dark:text-slate-400">
+<li><a class="hover:underline hover:text-orange-700" href="#">About</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Blog</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Careers</a></li>
+<li><a class="hover:underline hover:text-orange-700" href="#">Terms &amp; Privacy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1080px] mx-auto px-4 py-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 dark:text-slate-400">© 2024 Eventbrite</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-700 transition-colors">public</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-700 transition-colors">share</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-orange-700 transition-colors">mail</span>
+</div>
+</div>
+</footer>
+</body></html>
